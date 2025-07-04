@@ -1,11 +1,15 @@
 import styles from "./users.module.css";
-import { UserCardHeader } from "./UserCardHeader";
+import { JSX } from "react/jsx-runtime";
+import { ReactNode } from "react";
 
-export const UserCard = () => {
-  <div className={styles.userCard}>
-    <UserCardHeader />
-    <div className={styles.userCardBody}>
-      Email: <a href=""></a>
+interface UserCardProps {
+  children: ReactNode;
+}
+
+export const UserCard = ({ children }: UserCardProps): JSX.Element => {
+  return (
+    <div className={styles.userCard}>
+      {children}
     </div>
-  </div>;
-};
+  );
+}

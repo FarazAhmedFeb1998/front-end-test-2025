@@ -1,11 +1,21 @@
-import type { JSX } from "react";
+import type { JSX, JSXElementConstructor, ReactElement, ReactNode, ReactPortal } from "react";
 import { useEffect, useState } from "react";
 import styles from "./users.module.css";
 import { useGetUsersQuery } from "./usersApiSlice";
+import { UserCard } from "./UserCard"; 
+import { UserCardHeader } from "./UserCardHeader"
+import { useUserFiltering } from "../../app/useUserFiltering";
 
 export const Users = (): JSX.Element | null => {
-  const { data, isError, isLoading, isSuccess, refetch } = useGetUsersQuery(5);
-  const [filter, setFilter] = useState("");
+  const { data, isError, isLoading, isSuccess, refetch } = useGetUsersQuery();
+
+  const {
+    filter,
+    setFilter,
+    count,
+    setCount,
+    filteredAndLimitedUsers,
+  } = useUserFiltering(data);
 
   useEffect(() => {
     setInterval(() => {
@@ -22,14 +32,10 @@ export const Users = (): JSX.Element | null => {
   }
 
   if (isSuccess) {
-    const filteredData = data.filter(
-      (user) =>
-        user.name.toLowerCase().includes(filter.toLowerCase()) ||
-        user.email.toLowerCase().includes(filter.toLowerCase())
-    );
+
     return (
       <>
-        <div className={styles.inputContainer}>
+        <div className={styles.filterContainer}>
           <input
             type="text"
             placeholder="Filter users..."
@@ -37,15 +43,30 @@ export const Users = (): JSX.Element | null => {
             onChange={(e) => {
               setFilter(e.target.value);
             }}
+            className={styles.filterInput}
+          />
+          <input
+            type="number"
+            placeholder="count"
+            value={count}
+            onChange={(e) => {
+              if (e.target.value === '' || /^\d+$/.test(e.target.value) && parseInt(e.target.value) <= 10) { // Regex to allow only digits
+                setCount(e.target.value);
+              }
+            }}
+            className={styles.countInput}
           />
         </div>
-        {filteredData.map(({ name, email }) => (
-          <div className={styles.userCard}>
-            <div className={styles.userCardHeader}>{name}</div>
-            <div className={styles.userCardBody}>
-              Email: <a href="mailto:{email}">{email}</a>
+        {filteredAndLimitedUsers.map(( user) => (
+          <UserCard>
+            <div className={styles.userImageContainer}>
+              <img src={"/assets/profile.png"} className={styles.userImage} />
             </div>
-          </div>
+            <UserCardHeader>{user.username}</UserCardHeader>
+            <div className={styles.userCardBody}>
+              Email: <a href={`mailto:${user.email}`}>{user.email}</a>
+            </div>
+          </UserCard>
         ))}
       </>
     );

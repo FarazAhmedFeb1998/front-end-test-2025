@@ -1,9 +1,10 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-type User = {
+export type User = {
   id: string;
-  name: string;
+  username: string;
   email: string;
+  name:String;
 };
 
 export const usersApiSlice = createApi({
@@ -13,9 +14,16 @@ export const usersApiSlice = createApi({
   reducerPath: "usersApi",
   tagTypes: ["Users"],
   endpoints: (build) => ({
-    getUsers: build.query<User[], number>({
-      query: (limit = 10) => `?limit=${limit.toString()}`,
-      providesTags: (_result, _error, id) => [{ type: "Users", id }],
+    getUsers: build.query<User[], void>({
+      //jsonplaceholder.typicode.com/users does not support a ?limit= query parameter. 
+      query: () => '',
+     providesTags: (result) =>
+        result
+          ? [
+              ...result.map(({ id }) => ({ type: 'Users', id } as const)),
+              { type: 'Users', id: 'LIST' },
+            ]
+          : [{ type: 'Users', id: 'LIST' }],
     }),
   }),
 });
