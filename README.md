@@ -1,22 +1,31 @@
-### Introduction
+### Steps to Run project
 
-You've been presented with a small project which you know nothing about. Please fix all of the bugs and refactor where necessary.
+First Take a clone of repository
 
-- Refactor the `Users.tsx` render function to use the `UserCard` and `UserCardHeader` components.
-- Currently we're rendering the user's full name. Please render their username instead.
-- Fix the users API query. We're requesting 5 users when calling the function, why are 10 being rendered?
-- Extract the user filtering logic to a custom hook
-- Our users need to be able to use this web app on their smartphones, please make the layout responsive.
-- Fix any other bugs or performance issues which you find in the codebase.
+- Run command `npm install` or `yarn install` (make sure you are in directory where this project is clone)
+- after installation complete
+- Run command `npm start`
 
-### Submission
+### Change logs:
+ - Refactored User.txs render function and usinging UserCard and UserCardHeader component
+ - Replaced full name with user name
+ - removed invalid querry ?limit
+ - added number of user preview as per user preference(initial 5)
+ - Extract the user filtering logic to a custom hook
+ - made ui responsive for all screen sizes
+ - optimized code for better performance
+ - added profile icon for better user experience
+ - modified user card
 
-Please fork this repository to your own Github account and email a link to your updated repository to us.
+### initial application
 
-Alternatively, if this is not possible for some reason, you can zip your finished test and send it to us by email.
+<img width="1440" alt="Screenshot 2025-07-04 at 4 03 38 PM" src="https://github.com/user-attachments/assets/10867869-8935-4d31-acd9-76b57e2783c8" />
 
-### Next Steps
+### After changes, application Now:
 
-Please be prepared to talk through the changes you have made and explain your thinking in detail during the interview.
+https://github.com/user-attachments/assets/b0a6b9bb-5fce-44a2-a5d6-f463db0189ed
 
-This is intended as a short initial skills test, we may ask you to develop additional features on top of this foundation as the interview process progresses.
+
+### Performance of application:
+
+<img width="1440" alt="Screenshot 2025-07-04 at 4 00 18 PM" src="https://github.com/user-attachments/assets/fbd60e40-e667-4c44-b0af-8cd74ab4b92b" />
